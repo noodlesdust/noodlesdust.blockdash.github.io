@@ -1,0 +1,1778 @@
+//Any tips will help!!! I need to know how to get my program less laggy!!!
+/**
+
+THERE ARE THREE LEVELS: STEREO MADNESS AND TWO WARMUPS... WARMUPS PREPARE YOU AND ARE LIKE TUTORIALS, STEREO MADNESS IS THE LEVEL THAT IS SUPPOSED TO CHALLENGE YOU!!!
+
+Note: One funny thing about INSANE mode... It goes as fast as your computer can take so... have fun with that!
+
+*/
+/*
+
+Instructions:
+ * Click with your mouse or a key to jump. 
+ * The arrows on the left and right of the level select page can be used to switch between levels
+     - there's only two for now though...
+
+*/
+/**
+
+---------------------------------   HIGHSCORES:  ------------------------------
+
+                             N       F       I
+
+STEREO MADNESS
+ 1. Pranav Patil        -   100     100     100   =   300
+ 2. Packfan             -   100     100     100    =  300
+ 3. Tahsin Nawer Uddin  -   84      100     100   =   284
+ 4. FUSION BLAST        -   100     100     33    =   233
+ 5.
+ 6. 
+ 7. 
+ 8. 
+ 9. 
+ 10. 
+
+*/
+/*
+
+If you are 100% sure you jumped on a block, jump a little to the right of the block!
+
+If you see anything to be fixed comment below! I will get at it ASAP!
+
+Fixes:
+ * make screen smaller in insane and/or fast modes
+ * Easy Mode
+ * buttons bigger when mouse on!
+
+
+*/
+/**
+
+0 = Blank Space aka AIR
+1 = Block: You may jump on them but you may not collide
+2 = Spike: Dont' hit at all
+3 = Short Block: Like a Block, but has half the height
+
+*/
+
+var rotation = 0;
+
+var space = 0;
+
+var nodie = false;
+
+var attempts = 1;
+
+var levels = [
+
+    [
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+
+    ],
+    
+    [
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 2, 2, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 2]
+
+    ],
+
+    [
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 3, 3, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 0, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 3, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3, 3, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
+
+    ]
+
+];
+ //an array of each levels
+var level = 1; //level chosen
+
+var screen = "home"; //currrent screen
+
+var mode = 0; //type of gameplay
+
+var ninja = false;
+
+var first = true; //first frame of a level
+
+var secondFrame = false;
+
+var item = 0; //what the value in the array is
+
+var player = [50, 220, color(255, 255, 255), color(0), 1]; //array of values dealing with the player
+
+var jump = false; //if the player is jumping
+
+var land = false; //if the player has landed
+
+var yvel = 0; //change in the y value
+
+var blocks = []; //an array
+
+var deathTimer = 50;
+
+var translateX = -50;
+
+var down = false;
+
+var collide = false;
+
+var screenPart = -50;
+
+var firstClick = 0;
+
+var score = [
+
+    [0, 0, 0],
+
+    [0, 0, 0],
+
+    [0, 0, 0]
+
+];
+
+var highScore = [
+
+    [0, 0, 0],
+    [0, 0, 0],
+
+    [0, 0, 0]
+
+];
+
+keyPressed = function() {
+
+    down = true;
+
+};
+
+keyReleased = function() {
+
+    down = false;
+
+};
+
+mousePressed = function() {
+
+    down = true;
+
+};
+
+mouseReleased = function() {
+
+    down = false;
+
+    if (screen === "home") {
+
+        if (mouseX > 287 & mouseX < 385 & mouseY > 201 & mouseY < 301) {
+
+            screen = "mode select";
+
+        }
+
+        if (mouseX > 17 & mouseX < 115 & mouseY > 201 & mouseY < 301) {
+
+            screen = "character select";
+
+        }
+
+        if (mouseX > 133 & mouseX < 266 & mouseY > 184 & mouseY < 317) {
+
+            screen = "level select";
+
+            if (firstClick === 0) {
+
+                firstClick = frameCount;
+
+            }
+
+        }
+
+    } else if (screen === "level select") {
+
+        textFont(createFont("impact"));
+
+        attempts = 1;
+        
+        secondFrame = true;
+        
+        if (dist(mouseX, mouseY, 20, 20) < 35) {
+
+            screen = "home";
+
+        } else if (mouseX < 20 & mouseY > (210 - mouseX * 2) & mouseY < (190 + mouseX * 2)) {
+
+            if (level > 1) {
+
+                level--;
+
+            }
+
+        } else if (mouseX > 380 & mouseY > (170 + (mouseX - 380) * 2) & mouseY < (230 - (mouseX - 380) * 2)) {
+
+            if (level < 3) {
+
+                level++;
+
+            }
+
+        } else {
+
+            screen = "game";
+
+            deathTimer = 0;
+
+            first = true;
+
+        }
+
+    } else if (screen === "character select") {
+
+        if (dist(mouseX, mouseY, 20, 20) < 35) {
+
+            screen = "home";
+
+        } else if (mouseX > 85 & mouseX < 115 & mouseY > 135 & mouseY < 165) {
+            
+            player[4] = 1;
+            
+        } else if (mouseX > 185 & mouseX < 215 & mouseY > 135 & mouseY < 165) {
+            
+            player[4] = 2;
+            
+        } else if (mouseX > 215 & mouseY > 135 & mouseY < 165) {
+            
+            player[4] = 3;
+            
+        } else if (mouseY > 350 & mouseY < 380 & mouseX > 20 & mouseY < 380) {
+
+            if (mouseX < 50) {
+
+                player[3] = color(0, 255, 0);
+
+            } else if (mouseX < 80) {
+
+                player[3] = color(0, 255, 127);
+
+            } else if (mouseX < 110) {
+
+                player[3] = color(0, 255, 255);
+
+            } else if (mouseX < 140) {
+
+                player[3] = color(0, 0, 255);
+
+            } else if (mouseX < 170) {
+
+                player[3] = color(204, 0, 255);
+
+            } else if (mouseX < 200) {
+
+                player[3] = color(247, 94, 196);
+
+            } else if (mouseX < 230) {
+
+                player[3] = color(255, 0, 0);
+
+            } else if (mouseX < 260) {
+
+                player[3] = color(255, 136, 0);
+
+            } else if (mouseX < 290) {
+
+                player[3] = color(255, 255, 0);
+
+            } else if (mouseX < 320) {
+
+                player[3] = color(255, 255, 255);
+
+            } else if (mouseX < 350) {
+
+                player[3] = color(110, 110, 110);
+
+            } else if (mouseX < 380) {
+
+                player[3] = color(0, 0, 0);
+
+            }
+
+        } else if (mouseY > 300 & mouseY < 330 & mouseX > 20 & mouseY < 380) {
+
+            if (mouseX < 50) {
+
+                player[2] = color(0, 255, 0);
+
+            } else if (mouseX < 80) {
+
+                player[2] = color(0, 255, 127);
+
+            } else if (mouseX < 110) {
+
+                player[2] = color(0, 255, 255);
+
+            } else if (mouseX < 140) {
+
+                player[2] = color(0, 0, 255);
+
+            } else if (mouseX < 170) {
+
+                player[2] = color(204, 0, 255);
+
+            } else if (mouseX < 200) {
+
+                player[2] = color(247, 94, 196);
+
+            } else if (mouseX < 230) {
+
+                player[2] = color(255, 0, 0);
+
+            } else if (mouseX < 260) {
+
+                player[2] = color(255, 136, 0);
+
+            } else if (mouseX < 290) {
+
+                player[2] = color(255, 255, 0);
+
+            } else if (mouseX < 320) {
+
+                player[2] = color(255, 255, 255);
+
+            } else if (mouseX < 350) {
+
+                player[2] = color(110, 110, 110);
+
+            } else if (mouseX < 380) {
+
+                player[2] = color(0, 0, 0);
+
+            }
+
+        }
+
+    } else if (screen === "mode select") {
+
+        if (mouseX > 50 & mouseX < 250 & mouseY > 213 & mouseY < 363) {
+
+            if (mouseY < 263) {
+
+                mode = 0;
+
+            } else if (mouseY < 313) {
+
+                mode = 1;
+
+            } else if (mouseY < 363) {
+
+                mode = 2;
+
+            }
+
+        } else if (mouseX > 274 & mouseX < 374 & mouseY > 263 & mouseY < 313) {
+
+            ninja = !ninja;
+
+        } else if (dist(mouseX, mouseY, 20, 20) < 35) {
+
+            screen = "home";
+
+        }
+
+    } else if (screen === "game" & dist(mouseX, mouseY, 30, 30) < 20) {
+
+        screen = "level select";
+
+        deathTimer = 50;
+
+    }
+
+};
+
+draw = function() {
+
+    if (mode === 0) {
+
+        frameRate(40);
+
+    } else if (mode === 1) {
+
+        frameRate(max/3);
+
+    } else if (mode === 2) {
+
+        frameRate(max);
+        
+    }
+
+    if (screen === "home") {
+
+        background(50, 77, 252);
+
+        textAlign(LEFT, LEFT);
+
+        textFont(createFont("impact", 55));
+
+        fill(255, 255, 255);
+
+        text("GEOMETRY DASH", 25, 125);
+
+        textFont(createFont("impact", 55));
+
+        fill(13, 255, 0);
+
+        text("GEOMETRY DASH", 24, 126);
+
+        rectMode(CENTER);
+
+        //center play button
+
+        stroke(0, 0, 0);
+
+        strokeWeight(3);
+
+        fill(0, 123, 255);
+
+        rect(200, 250, 100, 100, 5);
+
+        stroke(255, 255, 255);
+
+        noFill();
+
+        rect(200, 250, 106, 106, 5);
+
+        stroke(0, 0, 0);
+
+        fill(21, 255, 0);
+
+        beginShape();
+
+        vertex(177, 187);
+
+        vertex(223, 187);
+
+        vertex(223, 227);
+
+        vertex(263, 227);
+
+        vertex(263, 272);
+
+        vertex(223, 272);
+
+        vertex(223, 315);
+
+        vertex(177, 315);
+
+        vertex(177, 272);
+
+        vertex(137, 272);
+
+        vertex(137, 227);
+
+        vertex(177, 227);
+
+        endShape(CLOSE);
+
+        noFill();
+
+        stroke(255, 255, 255);
+
+        beginShape();
+
+        vertex(174, 184);
+
+        vertex(226, 184);
+
+        vertex(226, 224);
+
+        vertex(266, 224);
+
+        vertex(266, 275);
+
+        vertex(226, 275);
+
+        vertex(226, 318);
+
+        vertex(174, 318);
+
+        vertex(174, 275);
+
+        vertex(134, 275);
+
+        vertex(134, 224);
+
+        vertex(174, 224);
+
+        endShape(CLOSE);
+
+        //left character button
+
+        pushMatrix();
+
+        translate(-200, -250);
+
+        scale(0.75);
+
+        translate(155, 416);
+
+        stroke(0, 0, 0);
+
+        strokeWeight(3);
+
+        fill(0, 123, 255);
+
+        rect(200, 250, 100, 100, 5);
+
+        stroke(255, 255, 255);
+
+        noFill();
+
+        rect(200, 250, 106, 106, 5);
+
+        stroke(0, 0, 0);
+
+        fill(21, 255, 0);
+
+        beginShape();
+
+        vertex(177, 187);
+
+        vertex(223, 187);
+
+        vertex(223, 227);
+
+        vertex(263, 227);
+
+        vertex(263, 272);
+
+        vertex(223, 272);
+
+        vertex(223, 315);
+
+        vertex(177, 315);
+
+        vertex(177, 272);
+
+        vertex(137, 272);
+
+        vertex(137, 227);
+
+        vertex(177, 227);
+
+        endShape(CLOSE);
+
+        noFill();
+
+        stroke(255, 255, 255);
+
+        beginShape();
+
+        vertex(174, 184);
+
+        vertex(226, 184);
+
+        vertex(226, 224);
+
+        vertex(266, 224);
+
+        vertex(266, 275);
+
+        vertex(226, 275);
+
+        vertex(226, 318);
+
+        vertex(174, 318);
+
+        vertex(174, 275);
+
+        vertex(134, 275);
+
+        vertex(134, 224);
+
+        vertex(174, 224);
+
+        endShape(CLOSE);
+
+        popMatrix();
+
+        //right "more" button
+
+        pushMatrix();
+
+        translate(-200, -250);
+
+        scale(0.75);
+
+        translate(515, 416);
+
+        stroke(0, 0, 0);
+
+        strokeWeight(3);
+
+        fill(0, 123, 255);
+
+        rect(200, 250, 100, 100, 5);
+
+        stroke(255, 255, 255);
+
+        noFill();
+
+        rect(200, 250, 106, 106, 5);
+
+        stroke(0, 0, 0);
+
+        fill(21, 255, 0);
+
+        beginShape();
+
+        vertex(177, 187);
+
+        vertex(223, 187);
+
+        vertex(223, 227);
+
+        vertex(263, 227);
+
+        vertex(263, 272);
+
+        vertex(223, 272);
+
+        vertex(223, 315);
+
+        vertex(177, 315);
+
+        vertex(177, 272);
+
+        vertex(137, 272);
+
+        vertex(137, 227);
+
+        vertex(177, 227);
+
+        endShape(CLOSE);
+
+        noFill();
+
+        stroke(255, 255, 255);
+
+        beginShape();
+
+        vertex(174, 184);
+
+        vertex(226, 184);
+
+        vertex(226, 224);
+
+        vertex(266, 224);
+
+        vertex(266, 275);
+
+        vertex(226, 275);
+
+        vertex(226, 318);
+
+        vertex(174, 318);
+
+        vertex(174, 275);
+
+        vertex(134, 275);
+
+        vertex(134, 224);
+
+        vertex(174, 224);
+
+        endShape(CLOSE);
+
+        popMatrix();
+
+        stroke(0, 0, 0);
+
+        fill(255, 170, 0);
+
+        rect(66, 250, 56, 56);
+
+        fill(0);
+
+        rect(56, 242, 10, 10);
+
+        rect(76, 242, 10, 10);
+
+        rect(66, 262, 35, 7);
+
+        textFont(createFont("impact", 30));
+
+        fill(0, 0, 0);
+
+        text("MODE", 305, 261);
+
+        textFont(createFont("impact", 30));
+
+        fill(255, 170, 0);
+
+        text("MODE", 303, 259);
+
+        rectMode(LEFT);
+
+        fill(255, 170, 0);
+
+        triangle(185, 216, 232, 249, 185, 284); //center button triangle
+
+    } else if (screen === "level select") {
+
+        translateX = -50;
+        
+        screenPart = -50;
+        
+        textFont(createFont("impact"));
+
+        textAlign(CENTER, CENTER);
+
+        background(30, 0, 255);
+
+        fill(0, 0, 0, 120);
+
+        noStroke();
+
+        rect(30, 74, 340, 100, 10);
+
+        fill(255, 255, 255);
+
+        textSize(40);
+
+        if (level === 1) {
+
+            text("WARMUP 1", 200, 123);
+
+        } else if (level === 2) {
+            
+            text("WARMUP 2", 200, 123);
+            
+        } else if (level === 3) {
+
+            text("STEREO MADNESS", 200, 123);
+
+        }
+
+        textSize(20);
+
+        fill(255, 255, 255, -frameCount + firstClick + 355);
+
+        text("Click to change levels!", 200, 200);
+
+        //right arrow
+
+        beginShape();
+
+        vertex(306, 200);
+
+        vertex(350, 197);
+
+        vertex(350, 190);
+
+        vertex(370, 200);
+
+        vertex(350, 210);
+
+        vertex(350, 203);
+
+        endShape();
+
+        //left arrow
+
+        beginShape();
+
+        vertex(94, 200);
+
+        vertex(50, 197);
+
+        vertex(50, 190);
+
+        vertex(30, 200);
+
+        vertex(50, 210);
+
+        vertex(50, 203);
+
+        endShape();
+
+        fill(255, 255, 255);
+
+        triangle(5, 200, 20, 230, 20, 170); //left arrow
+
+        triangle(395, 200, 380, 230, 380, 170); //right arrow
+
+        //back arrow
+
+        strokeWeight(3);
+
+        fill(13, 255, 0);
+
+        stroke(0, 0, 0);
+
+        triangle(30, 15, 10, 30, 30, 45);
+
+        stroke(255, 255, 255);
+
+        noFill();
+
+        triangle(33, 9, 5, 30, 33, 51);
+
+        fill(255, 255, 255);
+
+        textSize(20);
+
+        text("NORMAL", 50, 250);
+
+        text("FAST", 50, 290);
+
+        text("INSANE", 50, 330);
+
+        stroke(0, 0, 0, 120);
+
+        strokeWeight(20);
+
+        line(100, 250, 360, 250);
+
+        line(100, 290, 360, 290);
+
+        line(100, 330, 360, 330);
+
+        stroke(0, 255, 0);
+
+        line(100, 250, 100 + 2.6 * highScore[level - 1][0], 250);
+
+        line(100, 290, 100 + 2.6 * highScore[level - 1][1], 290);
+
+        line(100, 330, 100 + 2.6 * highScore[level - 1][2], 330);
+
+        textSize(20);
+
+        fill(255);
+
+        text(highScore[level - 1][0] + "%", 215, 250);
+
+        text(highScore[level - 1][1] + "%", 215, 290);
+
+        text(highScore[level - 1][2] + "%", 215, 330);
+
+    } else if (screen === "character select") {
+
+        textFont(createFont("impact"));
+
+        background(109, 163, 176);
+        
+        stroke(0);
+        noFill();
+        
+        if (player[4] === 1) {
+            
+            rect(80, 130, 40, 40);
+            
+        } else if (player[4] === 2) {
+            
+            rect(180, 130, 40, 40);
+            
+        } else if (player[4] === 3) {
+            
+            rect(280, 130, 40, 40);
+            
+        }
+        
+        noStroke();
+
+        fill(player[2]);
+
+        rect(100 - 15, 150 - 15, 30, 30);
+
+        fill(player[3]);
+
+        rect(100 - 10, 150 - 9, 4.5, 4.5);
+
+        rect(100 + 5, 150 - 9, 4.5, 4.5);
+
+        rect(100 - 10, 150 + 3.5, 20, 4);
+
+            fill(player[2]);
+            
+            rect(200-15, 150-15, 8, 30);
+            rect(200-7, 150-15, 7, 7);
+            rect(200-7, 150+8, 7, 7);
+
+            fill(player[3]);
+            
+            rect(200+5, 150-15, 10, 30);
+            rect(200-2, 150-4, 10, 8);
+            
+            fill(player[2]);
+            
+            rect(300-15, 150-15, 30, 17);
+            rect(300-15, 150-15, 7, 30);
+            rect(300-3.5, 150-15, 7, 30);
+            rect(300+8, 150-15, 7, 30);
+            
+            fill(player[3]);
+            
+            rect(300-8, 150-9, 16, 5);
+            
+        //bottom row of colors!
+
+        fill(0, 255, 0);
+
+        rect(20, 350, 30, 30);
+
+        fill(0, 255, 255 / 2);
+
+        rect(50, 350, 30, 30);
+
+        fill(0, 255, 255);
+
+        rect(80, 350, 30, 30);
+
+        fill(0, 0, 255);
+
+        rect(110, 350, 30, 30);
+
+        fill(204, 0, 255);
+
+        rect(140, 350, 30, 30);
+
+        fill(247, 94, 196);
+
+        rect(170, 350, 30, 30);
+
+        fill(255, 0, 0);
+
+        rect(200, 350, 30, 30);
+
+        fill(255, 136, 0);
+
+        rect(230, 350, 30, 30);
+
+        fill(255, 255, 0);
+
+        rect(260, 350, 30, 30);
+
+        fill(255, 255, 255);
+
+        rect(290, 350, 30, 30);
+
+        fill(110, 110, 110);
+
+        rect(320, 350, 30, 30);
+
+        fill(0, 0, 0);
+
+        rect(350, 350, 30, 30);
+
+        //top row of colors!
+
+        fill(0, 255, 0);
+
+        rect(20, 300, 30, 30);
+
+        fill(0, 255, 255 / 2);
+
+        rect(50, 300, 30, 30);
+
+        fill(0, 255, 255);
+
+        rect(80, 300, 30, 30);
+
+        fill(0, 0, 255);
+
+        rect(110, 300, 30, 30);
+
+        fill(204, 0, 255);
+
+        rect(140, 300, 30, 30);
+
+        fill(247, 94, 196);
+
+        rect(170, 300, 30, 30);
+
+        fill(255, 0, 0);
+
+        rect(200, 300, 30, 30);
+
+        fill(255, 136, 0);
+
+        rect(230, 300, 30, 30);
+
+        fill(255, 255, 0);
+
+        rect(260, 300, 30, 30);
+
+        fill(255, 255, 255);
+
+        rect(290, 300, 30, 30);
+
+        fill(110, 110, 110);
+
+        rect(320, 300, 30, 30);
+
+        fill(0, 0, 0);
+
+        rect(350, 300, 30, 30);
+
+        //back arrow
+
+        strokeWeight(3);
+
+        fill(13, 255, 0);
+
+        stroke(0, 0, 0);
+
+        triangle(30, 15, 10, 30, 30, 45);
+
+        stroke(255, 255, 255);
+
+        noFill();
+
+        triangle(33, 9, 5, 30, 33, 51);
+
+    } else if (screen === "mode select") {
+
+        textFont(createFont("impact"));
+
+        background(25, 63, 255);
+
+        fill(0, 0, 0);
+
+        textAlign(CENTER);
+
+        text("Select which mode\nyou would like to\nplay in", 200, 70);
+
+        fill(255, 255, 255);
+
+        text("NORMAL", 150, 250);
+
+        text("FAST", 150, 300);
+
+        text("INSANE", 150, 350);
+
+        text("NINJA?", 325, 300);
+
+        stroke(0, 0, 0);
+
+        line(50, 262, 250, 262);
+
+        line(50, 312, 250, 312);
+
+        noFill();
+
+        rect(274, 263, 100, 50);
+
+        noStroke();
+
+        fill(0, 0, 0, 100);
+
+        rect(49, mode * 50 + 213, 203, 50);
+
+        if (ninja) {
+
+            rect(274, 263, 100, 50);
+
+        }
+
+        //back arrow
+
+        strokeWeight(3);
+
+        fill(13, 255, 0);
+
+        stroke(0, 0, 0);
+
+        triangle(30, 15, 10, 30, 30, 45);
+
+        stroke(255, 255, 255);
+
+        noFill();
+
+        triangle(33, 9, 5, 30, 33, 51);
+
+    } else if (screen === "game") {
+
+        pushMatrix();
+
+        fill(70, 106, 250, 100);
+
+        rect(-1000, -1000, 8000, 8000);
+
+        translate(-1 * translateX, 0);
+        
+        fill(70, 106, 250, 1000);
+        rect(150, 70, 300, 60);
+        
+        fill(255, 255, 255);
+        textFont(createFont("ar essence",  50));
+        text("Attempt " + attempts, 300, 100);
+        
+        if (deathTimer < 50) {
+
+            deathTimer += 5;
+
+            translateX -= 4;
+
+            fill(0, 0, 0, 200 - 4 * deathTimer);
+
+            ellipse(player[0] + 35, player[1] + 15, deathTimer + 50, deathTimer + 50);
+
+        }
+
+        if (translateX < 400) {
+
+            screenPart++;
+
+        } else if (translateX > (levels[level - 1][0].length * 30)) {
+
+            screenPart += 3.25;
+
+        }
+
+        noStroke();
+
+        if (first) {
+
+            first = false;
+            
+            for (var i = blocks.length; i > 0; i--) {
+
+                blocks.pop();
+
+            }
+
+            for (var row = 0; row < levels[level - 1].length; row++) {
+
+                for (var col = 0; col < levels[level - 1][row].length; col++) {
+
+                    item = levels[level - 1][row][col];
+
+                    if (item === 1) {
+
+                        blocks.push([col, row, 1, 0, 0]);
+
+                    } else if (item === 3) {
+
+                        blocks.push([col, row, 3, 0, 0]);
+
+                    } else if (item === 2) {
+
+                        blocks.push([col, row, 2, 0, 0]);
+
+                    }
+
+                }
+
+            }
+            
+            background(0, 145, 255);
+            
+        } else {
+
+            if (down) {
+    
+                if (screen === "game" & !jump & yvel < 1 & deathTimer === 50) {
+    
+                    jump = true;
+    
+                    yvel = -10;
+    
+                    rotation += 4;
+    
+                }
+    
+            }
+    
+            for (var i = 0; i < blocks.length; i++) {
+    
+                if (blocks[i][0] * 30 < (player[0] - 80) & blocks[i][0] > (player[0] - 150)) {
+    
+                    blocks[i][3] += 5;
+    
+                    blocks[i][4] += 2;
+    
+                }
+                    pushMatrix();
+    
+                translate(20, 0);
+    
+                if (blocks[i][2] === 1 & blocks[i][0] * 30 > (player[0] - 180) & blocks[i][0] * 30 < (player[0] + 300)) {
+                    
+                    noStroke();
+                    fill(0, 0, 0);
+                    
+                    rect(30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3], 30, 30);
+                    strokeWeight(3);
+                    stroke(255, 255, 255);
+                    
+                    //top line if at the very top
+                    if (blocks[i][1] === 0) {
+                        
+                        line(30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3], 30 * blocks[i][0] + blocks[i][4] + 30, 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3]);
+                        
+                    }
+                    
+                    //left line if at the very left
+                    if (blocks[i][0] === 0) {
+                        
+                        line(30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3], 30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3] + 30);
+                        
+                    //left line if block to the left is not a solid
+                    } else if (levels[level - 1][blocks[i][1]][blocks[i][0] - 1] !== 1 & blocks[i][0] > 0) {
+                        
+                        line(30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3], 30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3] + 30);
+                        
+                    }
+                    
+                    //right line if at the very right
+                    if (blocks[i][0] === levels[level - 1][blocks[i][1]].length) {
+                        
+                        line(30 + 30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3], 30 + 30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3] + 30);
+                        
+                    //right line if block to the right is not a solid
+                    } else if (levels[level - 1][blocks[i][1]][blocks[i][0] + 1] !== 1 & blocks[i][0] < levels[level - 1][blocks[i][1]].length) {
+                        
+                        line(30 + 30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3], 30 + 30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3] + 30);
+                        
+                    }
+                    
+                    //top line if at the very top
+                    if (blocks[i][1] === 0) {
+                        
+                        line(30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3], 30 + 30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3]);
+                        
+                    //top line if block to the top is not a solid
+                    } else if (levels[level - 1][blocks[i][1] - 1][blocks[i][0]] !== 1 & blocks[i][0] < levels[level - 1][blocks[i][1]].length) {
+                        
+                        line(30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3], 30 + 30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3]);
+                        
+                    }
+                    //bottom line
+                    if (blocks[i][1] === 4) {
+                        
+                        line(30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3] + 30, 30 + 30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3] + 30);
+                        
+                    //top line if block to the top is not a solid
+                    } else if (levels[level - 1][blocks[i][1] + 1][blocks[i][0]] !== 1 & blocks[i][0] < levels[level - 1][blocks[i][1]].length) {
+                        
+                        line(30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3] + 30, 30 + 30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3] + 30);
+                        
+                    }
+                    
+                } else if (blocks[i][2] === 3 & blocks[i][0] * 30 > (player[0] - 180) & blocks[i][0] * 30 < (player[0] + 300)) {
+    
+                    strokeWeight(3);
+                    stroke(255, 255, 255);
+                    fill(0, 0, 0);
+    
+                    rect(30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3], 30, 10);
+    
+                } else if (blocks[i][2] === 2 & blocks[i][0] * 30 > (player[0] - 180) & blocks[i][0] * 30 < (player[0] + 300)) {
+                    
+                    strokeWeight(3);
+                    stroke(255, 255, 255);
+                    fill(0, 0, 0);
+                    triangle(30 * blocks[i][0] + 15 + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + blocks[i][3], 30 * blocks[i][0] + 30 + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + 30 + blocks[i][3], 30 * blocks[i][0] + blocks[i][4], 100 - (levels[level - 1].length - 5) * 30 + 30 * blocks[i][1] + 30 + blocks[i][3]);
+    
+                }
+                noStroke();
+                popMatrix();
+    
+    
+                collide = false;
+    
+                nodie = false;
+                
+                if (player[0] > (30 * blocks[i][0] - 30) & player[0] < (30 * blocks[i][0] + 30) & player[1] > (30 * blocks[i][1] + 62) & player[1] < (30 * blocks[i][1] + 130)) {
+    
+                    collide = true;
+    
+                    land = false;
+    
+                    if (player[1] > (30 * blocks[i][1] + 105)) {
+    
+                        if (deathTimer === 50) {
+    
+                            deathTimer = 0;
+    
+                        }
+    
+                        yvel = 0;
+    
+                    }
+    
+                    if (player[1] < (30 * blocks[i][1] + 90) & (blocks[i][2] === 1 | blocks[i][2] === 3)) {
+    
+                        player[1] = 30 * blocks[i][1] + 70;
+                        yvel = 0;
+                        jump = false;
+                        
+                        if (keyIsPressed) {
+                            
+                            yvel = -10;
+                            jump = true;
+                            
+                        }
+                        
+                        nodie = true;
+    
+                    }
+    
+                    if (player[0] < (30 * blocks[i][0] + 62) & blocks[i][1] !== 0) {
+    
+                        land = true;
+    
+                    }
+    
+                    if (player[0] < (30 * blocks[i][0] + 62) & blocks[i][1] !== 0 & blocks[i][2] !== 2) {
+    
+                        if (levels[level - 1][blocks[i][1] - 1][blocks[i][0]] === 0) {
+    
+                            if (yvel !== 0 & !keyIsPressed) {
+    
+                                jump = false;
+    
+                                yvel = 0;
+                                
+                                nodie = true;
+    
+                        if (keyIsPressed) {
+                            
+                            yvel = -10;
+                            jump = true;
+                            
+                        }
+                            }
+    
+                        }
+    
+                    } else if (!keyPressed) {
+    
+                        if (blocks[i][2] === 2 & !nodie & ((blocks[i][0]*30 - 15 - (player[1] - blocks[i][1]*30 - 100 + 30)/2) < player[0]) & ((blocks[i][0]*30 + 15 + (player[1] - blocks[i][1]*30 - 100 + 30)/2) > player[0])) {
+    
+                            if (player[1] > (30 * blocks[i][1] + 67) & player[0] > (30 * blocks[i][0] - 25) & player[0] < (30 * blocks[i][0] + 25)) {
+    
+                                if (deathTimer === 50) {
+    
+                                    deathTimer = 0;
+    
+                                }
+    
+                                yvel = 0;
+    
+                            }
+    
+                            jump = true;
+    
+                        } else {
+    
+                            if (deathTimer === 50) {
+    
+                                deathTimer = 0;
+    
+                            }
+    
+                            yvel = 0;
+    
+                        }
+    
+                    } else if (blocks[i][2] === 2) {
+    
+                        if (player[1] > (30 * blocks[i][1] + 67) & player[0] > (30 * blocks[i][0] - 25) & player[0] < (30 * blocks[i][0] + 25) & !nodie & ((blocks[i][0]*30 - 17 - (player[1] - blocks[i][1]*30 - 100 + 30)/2) < player[0]) & ((blocks[i][0]*30 + 17 + (player[1] - blocks[i][1]*30 - 100 + 30)/2) > player[0])) {
+    
+                            if (deathTimer === 50) {
+    
+                                deathTimer = 0;
+    
+                            }
+    
+                            yvel = 0;
+    
+                        }
+                        down = false;
+    
+                    } else if (player[0] <= (30 * blocks[i][0] + 62) & blocks[i][2] !== 2) {
+    
+                        if (!keyIsPressed) {
+    
+                            jump = false;
+    
+                            yvel = 0;
+                            
+                            nodie = true;
+    
+                        if (keyIsPressed) {
+                            
+                            yvel = -10;
+                            jump = true;
+                            
+                        }
+                        }
+    
+                    } else {
+    
+                        if (blocks[i][2] === 2) {
+    
+                            if (player[1] > (30 * blocks[i][1] + 67) & player[0] > (30 * blocks[i][0] - 25) & player[0] < (30 * blocks[i][0] + 25) & !nodie & ((blocks[i][0]*30 - 15 - (player[1] - blocks[i][1]*30 - 100 + 30)/2) < player[0]) & ((blocks[i][0]*30 + 15 + (player[1] - blocks[i][1]*30 - 100 + 30)/2) > player[0])) {
+    
+                                if (deathTimer === 50) {
+    
+                                    deathTimer = 0;
+    
+                                }
+    
+                                yvel = 0;
+    
+                            }
+    
+                            jump = true;
+    
+                        } else {
+    
+                            if (deathTimer === 50) {
+    
+                                deathTimer = 0;
+    
+                            }
+    
+                            yvel = 0;
+    
+                        }
+    
+                    }
+    
+                }
+    
+                if (yvel === 0 & keyPressed) {
+    
+                    yvel = -10;
+    
+                }
+    
+                if (player[0] > (30 * blocks[i][0] - 30) & player[0] < (30 * blocks[i][0] + 30) & player[1] > (30 * blocks[i][1] + 70) & player[1] < (30 * blocks[i][1] + 130) & !keyIsPressed & !jump & blocks[i][2] !== 2) {
+    
+                    if (deathTimer === 50) {
+    
+                        deathTimer = 0;
+    
+                    }
+    
+                } else if (player[0] > (30 * blocks[i][0] - 30) & player[0] < (30 * blocks[i][0] + 30) & player[1] > (30 * blocks[i][1] + 70) & player[1] < (30 * blocks[i][1] + 130) & !keyIsPressed & !jump & !land) {
+    
+                    if (deathTimer === 50) {
+    
+                        deathTimer = 0;
+    
+                    }
+    
+                }
+    
+                if (collide & down & deathTimer === 50) {
+    
+                    jump = true;
+    
+                    yvel = -10;
+    
+                    rotation += 4;
+    
+                }
+    
+            }
+    
+            //the actual player
+    
+            pushMatrix();
+    
+            translate(player[0] + 35, player[1] + 15);
+            
+            if (mode === 2) {
+                
+                rotate(-rotation);
+                
+            } else {
+                
+                rotate(rotation);
+                
+            }
+    
+            if (player[4] === 1) {
+    
+                fill(player[2]);
+    
+                rect(-15, -15, 30, 30);
+    
+                fill(player[3]);
+    
+                rect(-10, 3.5, 4.5, 4.5);
+    
+                rect(5, 3.5, 4.5, 4.5);
+    
+                rect(-10, -9, 20, 4);
+    
+            } else if (player[4] === 2) {
+    
+                fill(player[2]);
+                
+                rect(-15, -15, 8, 30);
+                rect(-7, -15, 7, 7);
+                rect(-7, 8, 7, 7);
+    
+                fill(player[3]);
+                
+                rect(5, -15, 10, 30);
+                rect(-2, -4, 10, 8);
+                
+            } else if (player[4] === 3) {
+    
+                fill(player[2]);
+                
+                rect(-15, -2, 30, 17);
+                rect(-15, -15, 7, 30);
+                rect(-3.5, -15, 7, 30);
+                rect(8, -15, 7, 30);
+                
+                fill(player[3]);
+                
+                rect(-8, 4, 16, 5);
+                
+            } else if (player[4] === 4) {
+                
+                
+                
+            } else if (player[4] === 5) {
+                
+                
+                
+            } else {
+    
+                fill(player[2]);
+    
+                rect(-15, -15, 30, 30);
+    
+                fill(player[3]);
+    
+                rect(-5, -5, 10, 10);
+    
+            }
+    
+            popMatrix();
+    
+            //ground
+    
+            fill(13, 23, 133, 200);
+    
+            rect(-100, 100 - 1 * (levels[level - 1].length - 5) * 30 + levels[level - 1].length * 30, levels[level - 1][0].length * 30 + 1400, 150);
+    
+            if (player[1] > 220) {
+    
+                yvel = 0;
+    
+                player[1] = 220;
+    
+                jump = false;
+    
+            }
+    
+            if (deathTimer === 50) {
+    
+                player[1] += yvel;
+    
+                player[0] = 50 + translateX + screenPart;
+    
+            }
+    
+            if (yvel < 10) {
+    
+                yvel += 0.5;
+    
+            }
+    
+            if (translateX <= -50) {
+    
+                yvel = 2;
+    
+                player[1] = 120;
+    
+                rotation = 140;
+    
+                deathTimer = 50;
+    
+                first = true;
+    
+                player[0] = 0;
+    
+            }
+    
+            if ((jump | (rotation % 90 < 88)) & deathTimer === 50) {
+    
+                if (ninja) {
+    
+                    rotation += 50;
+    
+                } else {
+    
+                    rotation += 2;
+    
+                }
+    
+                if (yvel > 7) {
+    
+                    rotation--;
+    
+                }
+    
+                if (!jump & rotation & 90 !== 88) {
+    
+                    while (rotation % 90 < 88) {
+    
+                        rotation += 2;
+    
+                    }
+    
+                }
+    
+            }
+    
+            if (deathTimer === 45) {
+    
+                yvel = 2;
+    
+                player[1] = 120;
+    
+                rotation = 140;
+    
+                first = true;
+    
+                space = 0;
+    
+                translateX = -50;
+    
+                screenPart = -50;
+                
+                if (!secondFrame) {
+                    
+                    attempts ++;
+                    
+                } else {
+                    
+                    secondFrame = false;
+                    
+                }
+    
+            }
+    
+            if (translateX < (levels[level - 1][0].length * 30 + 396)) {
+    
+                translateX += 4;
+    
+            } else {
+    
+                stroke(0, 0, 0);
+    
+                strokeWeight(50);
+    
+                for (var i = 0; i < 50; i++) {
+    
+                    line(410, 400, random(-400, 0), random(-400, 400));
+    
+                }
+    
+                if (player[1] < -200) {
+    
+                    screen = "level select";
+    
+                    deathTimer = 50;
+    
+                }
+    
+            }
+    
+            score[level - 1][mode] = round(translateX / (levels[level - 1][0].length * 30 + 400) * 100);
+    
+            if (translateX === (levels[level - 1][0].length * 30 + 100)) {
+    
+                yvel = 0;
+    
+            }
+    
+            if (translateX > (levels[level - 1][0].length * 30 + 100)) {
+    
+                yvel -= 0.55;
+    
+                jump = true;
+    
+                rotation += 5;
+    
+            }
+    
+            popMatrix();
+    
+            fill(13, 23, 133, 200);
+    
+            noStroke();
+    
+            for (var i = -translateX * 0.5 - 1000; i < 1200; i += 100) {
+    
+                rect(i - frameCount % 400 + space, 263, 86, 126);
+    
+            }
+    
+            if (frameCount % 400 === 0) {
+    
+                space += 400;
+    
+            }
+    
+            if (highScore[level - 1][mode] < score[level - 1][mode]) {
+    
+                highScore[level - 1][mode] = score[level - 1][mode];
+    
+            }
+    
+            stroke(0, 0, 0, 120);
+    
+            strokeWeight(15);
+    
+            line(70, 30, 330, 30);
+    
+            stroke(0, 255, 0);
+    
+            line(70, 30, 70 + 2.6 * (score[level - 1][mode]), 30);
+    
+            noStroke();
+    
+            fill(255);
+    
+            ellipse(30, 30, 40, 40);
+    
+            fill(0);
+    
+            triangle(37, 20, 17, 30, 37, 40);
+        }
+        
+    }
+    
+};
